@@ -128,7 +128,30 @@
     }
     .sign-detail-row:last-child { border-bottom: none; }
     .sign-detail-label { color: var(--gray-500); }
-    .sign-detail-value { font-weight: 600; color: #0d0d1a; }
+    .sign-detail-value { font-weight: 600; color: #0d0d1a; text-align: right; }
+
+    /* ===== FREE MONTH BADGE ===== */
+    .free-month-badge {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin: 8px 18px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(4, 240, 106, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .free-month-badge svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
 
     /* ===== SIGNATURE PAD ===== */
     .sig-pad-wrap { padding: 18px; }
@@ -218,6 +241,112 @@
     }
     .success-screen p { font-size: 14px; color: var(--gray-500); line-height: 1.6; }
 
+    /* ===== POPUP MODAL ===== */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(69, 29, 199, 0.92);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .popup-overlay.show {
+      display: flex;
+    }
+    .popup-content {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .popup-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 36px;
+      box-shadow: 0 8px 24px rgba(4, 240, 106, 0.4);
+    }
+    .popup-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #0d0d1a;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .popup-message {
+      font-size: 14px;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .popup-message strong {
+      color: var(--brand);
+      font-weight: 700;
+    }
+    .popup-bonus {
+      background: var(--brand-light);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .popup-bonus-label {
+      font-size: 11px;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .popup-bonus-amount {
+      font-family: 'Sora', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--brand);
+      letter-spacing: -1px;
+    }
+    .popup-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      font-family: 'Sora', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: var(--brand);
+      color: #fff;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .popup-btn:active { transform: scale(0.98); }
+
     /* Spinner for async loader */
     .api-loader { display: flex; align-items: center; gap: 8px; padding: 12px; font-size: 12px; color: var(--gray-400); }
     .spinner {
@@ -269,6 +398,14 @@
     <div class="sign-detail-row"><span class="sign-detail-label">Preisgarantie</span><span class="sign-detail-value" style="color:var(--accent-dark)">24 Monate</span></div>
     <div class="sign-detail-row"><span class="sign-detail-label">Sofortbonus</span><span class="sign-detail-value" style="color:var(--brand)">150 € direkt ausgezahlt</span></div>
     <div class="sign-detail-row"><span class="sign-detail-label">Jahresgesamtkosten</span><span class="sign-detail-value">904,15 € / Jahr</span></div>
+    
+    <!-- FREE MONTH BADGE -->
+    <div class="free-month-badge">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="currentColor"/>
+      </svg>
+      <span>🎉 1. Monat gratis – Grundpreis entfällt!</span>
+    </div>
   </div>
 
   <!-- Signature Card -->
@@ -307,13 +444,34 @@
     </div>
   </div>
 
-  <!-- Success screen -->
+  <!-- Success screen (hidden, used for fallback) -->
   <div class="success-screen" id="successScreen">
     <div class="success-icon">✅</div>
     <h3>Glückwunsch!</h3>
     <p>Dein Vertrag mit Wave Energy wurde erfolgreich unterzeichnet.<br><br>Du erhältst in Kürze eine Bestätigung per E-Mail. Dein <strong>Sofortbonus von 150 €</strong> wird innerhalb von 3–5 Werktagen auf dein Konto überwiesen.</p>
   </div>
 
+</div>
+
+<!-- ===== POPUP MODAL ===== -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-content">
+    <div class="popup-icon">🎉</div>
+    <h2 class="popup-title">Glückwunsch!</h2>
+    <p class="popup-message">
+      Dein Vertrag mit <strong>Wave Energy</strong> wurde erfolgreich unterzeichnet. Du erhältst in Kürze eine Bestätigung per E-Mail.
+    </p>
+    <div class="popup-bonus">
+      <div class="popup-bonus-label">Dein Sofortbonus</div>
+      <div class="popup-bonus-amount">150,00 €</div>
+    </div>
+    <p class="popup-message" style="margin-bottom: 0;">
+      Der Bonus wird innerhalb von <strong>3–5 Werktagen</strong> auf dein Konto überwiesen.
+    </p>
+    <button class="popup-btn" id="popupCloseBtn" type="button">
+      Zum Dashboard →
+    </button>
+  </div>
 </div>
 
 <script>
@@ -430,10 +588,25 @@
     submitBtn.disabled = !(hasSig && consentCheck.checked);
   }
 
+  // =============================================
+  // SUBMIT & POPUP
+  // =============================================
   submitBtn.addEventListener('click', function() {
-    document.getElementById('signatureCard').style.display = 'none';
-    document.getElementById('successScreen').classList.add('visible');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Show popup modal
+    document.getElementById('popupOverlay').classList.add('show');
+    
+    // Optional: Update API status if needed
+    // You can add API call here to mark contract as signed
+  });
+
+  // Close popup and redirect (or any other action)
+  document.getElementById('popupCloseBtn').addEventListener('click', function() {
+    // You can redirect to another page or close the popup
+    // For demo, we'll just hide the popup
+    document.getElementById('popupOverlay').classList.remove('show');
+    
+    // Optional redirect:
+    // window.location.href = 'dashboard.html';
   });
 </script>
 </body>
